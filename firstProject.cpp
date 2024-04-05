@@ -7,115 +7,67 @@
 
 using namespace std;
 
-
 int PSI= 100;
-const double lifeExpecMEAN= 55.0;
-const double lifeExpecSTDV= 10.0;
+const double lifeExpecMEAN =55.0;
+const double lifeExpecSTDV =10.0;
 const int lifeExpecMIN= 25;
-const int lifeExpecMAX= 80;
+const int lifeExpecMAX =80;
 
-
-
-
-
-class Politician 
-{
-
-    public:
-
+class Politician {
+public:
     int age;
     string level;
     int expYears;
+};
 
-
-
-
-
-//level elligibility
-
-
-
-
-};    
-
-
-bool unfilledPositionFound(unordered_map<string, int>& )
-{
-     
-}
-
-bool reelectingConsulFound()
-{
-
-
-}
-
-
-
-//calculate PSI
-int returnPSI(int something){
-//PSI Calculation
-int PSI = 100;
- if(unfilledPositionFound)
-{
-   PSI -=5;
-}
- if(reelectingConsulFound) 
-{
-   PSI -=10;
-}
-
- return PSI; 
-}
-
-
-//Updating the levels
-string updateLevel(Politician& p)
-{
-    if(p.level == "Quaestor" && p.expYears== 30)
-    {
-        p.level="Aedile";
-    }
-    if(p.level == "Aedile" && p.expYears== 30)
-    {
-        p.level="Praetor";
-    }
-    if(p.level == "Praetor" && p.expYears== 30)
-    {
-        p.level="Consul";
-    }
-   
-
-   return p.level;
-}
-
-
-
-int simulateLifeExpec()
-{
-    #include <cstdlib> // for rand()
-
-// Function to simulate the life expectancy of a politician
-int simulateLifeExpectancy() {
-    // Simulate life expectancy within a reasonable range, for example, between 60 and 90 years
-
-
-    // Generate a random number within the specified range
-    int lifeExpectancy = lifeExpecMIN + rand() % (lifeExpecMAX - lifeExpecMIN + 1);
-
-    return lifeExpectancy;
-}
-
-
-}
-
-void simulateAnnualElections();
-
+bool unfilledPositionFound(unordered_map<string, int>& officePositions);
+bool reelectingConsulFound(queue<Politician>& candidates);
+int calculatePSI(queue<Politician>& candidates, unordered_map<string, int>& officePositions);
+string updateLevel(Politician& p);
+void simulateAnnualElections(queue<Politician>& candidates, unordered_map<string, int>& officePositions);
 void updateAgesAndRemovePoliticians(queue<Politician>& candidates);
+void generateNewCandidates(queue<Politician>& candidates);
+void printResults(queue<Politician>& candidates, unordered_map<string, int>& officePositions, int finalPSI);
 
-void generateNewCandidates();
+int simulateLifeExpec() {
+    // Generate a random life expectancy within the specified range
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    return lifeExpecMIN + rand() % (lifeExpecMAX - lifeExpecMIN + 1);
+}
 
-void printResluts(queue<Politician>& candidates, unordered_map<string, int>& officePositions, int finalePSI);
+int main() {
+    // Seed the random number generator
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    // Initialize the simulation
+    queue<Politician> candidates;
+    unordered_map<string, int> officePositions = {
+        {"Quaestor", 20},
+        {"Aedile", 10},
+        {"Praetor", 8},
+        {"Consul", 2}
+    };
+
+    // Simulate the 200-year period
+    for (int year = 0; year < 200; year++) {
+        // Simulate the annual election process
+        simulateAnnualElections(candidates, officePositions);
+
+        // Update ages and remove politicians who have surpassed their life expectancy
+        updateAgesAndRemovePoliticians(candidates);
+
+        // Generate new candidates
+        generateNewCandidates(candidates);
+    }
+
+    // Calculate the final PSI
+    int finalPSI = calculatePSI(candidates, officePositions);
+
+    // Print the results
+    printResults(candidates, officePositions, finalPSI);
+
+    return 0;
+}
 
 
 bool unfilledPositionFound(unordered_map<string, int>& officePositions) {
@@ -127,7 +79,6 @@ bool unfilledPositionFound(unordered_map<string, int>& officePositions) {
     return false; // No unfilled positions
 }
 
-// Function to check if there is a consul being re-elected within 10 years
 bool reelectingConsulFound(queue<Politician>& candidates) {
     int consulCount = 0;
     while (!candidates.empty()) {
@@ -142,21 +93,20 @@ bool reelectingConsulFound(queue<Politician>& candidates) {
     return false; // No consul re-elected within 10 years
 }
 
-// Function to calculate the Political Stability Index (PSI)
-int calculatePSI(unordered_map<string, int>& officePositions) {
+int calculatePSI(queue<Politician>& candidates, unordered_map<string, int>& officePositions) {
     int psi = 100; // Starting PSI
-    for (auto& pair : officePositions) {
-        if (pair.second > 0) {
-            psi -= 5; // Penalty for each unfilled position
-        }
+    
+    if (unfilledPositionFound(officePositions)) {
+        psi -= 5; // Penalty for each unfilled position
     }
+    
     if (reelectingConsulFound(candidates)) {
         psi -= 10; // Additional penalty for re-electing a Consul within 10 years
     }
+
     return psi;
 }
 
-// Function to update the level of a politician
 string updateLevel(Politician& p) {
     if (p.level == "Quaestor" && p.age >= 36) {
         return "Aedile"; // Promote Quaestor to Aedile if age requirement is met
@@ -169,7 +119,6 @@ string updateLevel(Politician& p) {
     }
 }
 
-// Function to simulate the annual election process and career progression
 void simulateAnnualElections(queue<Politician>& candidates, unordered_map<string, int>& officePositions) {
     while (!candidates.empty()) {
         Politician p = candidates.front();
@@ -182,7 +131,6 @@ void simulateAnnualElections(queue<Politician>& candidates, unordered_map<string
     }
 }
 
-// Function to update the ages of politicians and remove those who have surpassed their life expectancy
 void updateAgesAndRemovePoliticians(queue<Politician>& candidates) {
     int candidateCount = candidates.size();
     for (int i = 0; i < candidateCount; ++i) {
@@ -195,7 +143,6 @@ void updateAgesAndRemovePoliticians(queue<Politician>& candidates) {
     }
 }
 
-// Function to generate new candidates for the election
 void generateNewCandidates(queue<Politician>& candidates) {
     int influx = 15 + rand() % 6; // Annual Influx of New Candidates
     for (int i = 0; i < influx; ++i) {
@@ -206,7 +153,6 @@ void generateNewCandidates(queue<Politician>& candidates) {
     }
 }
 
-// Function to print the final results
 void printResults(queue<Politician>& candidates, unordered_map<string, int>& officePositions, int finalPSI) {
     cout << "End-of-Simulation PSI: " << finalPSI << endl;
 
@@ -222,13 +168,3 @@ void printResults(queue<Politician>& candidates, unordered_map<string, int>& off
 }
 
 
-int main() 
-{
-    
-
-
-
-
-
-    return 0;
-}
