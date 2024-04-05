@@ -34,6 +34,10 @@ class Politician
 
 
 };
+
+
+bool unfilledPositionFound();
+bool reelectingConsulFound();
 //calculate PSI
 int returnPSI(int something){
 //PSI Calculation
@@ -52,7 +56,7 @@ int PSI = 100;
 
 
 //Updating the levels
-string updateLevel(Politician p)
+string updateLevel(Politician& p)
 {
     if(p.level == "Quaestor" && p.expYears== 30)
     {
@@ -71,5 +75,16 @@ string updateLevel(Politician p)
    return p.level;
 }
 
+
+
+int simulateLifeExpec();
+
+void simulateAnnualElections();
+
+void updateAgesAndRemovePoliticians(queue<Politician& candidates);
+
+void generateNewCandidates();
+
+void printResluts(queue<Politician>& candidates, undordred_map<string, int>& officePositions, int finalePSI);
 
 
