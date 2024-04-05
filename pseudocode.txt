@@ -1,0 +1,119 @@
+      / Quaestor min 30    				   \
+     / Aedile    min 36 + 2y (experience of being Quaestor) \ 
+    / Praetor    min 39 + 2y (experience of being Aedil)     \
+   / Consul      min 42 + 2y (experience of being Praetor)    \ 
+
+LIFE_EXPECTANCY  distribution
+#DEFINE PSI 100
+
+
+
+----------RETURNING AND THEIR TYPES:--------------------
+PSI
+vector<FILL PERCENTAGE>
+array<AGE>
+
+----------CLASSES -------------------------------------
+class Politician 
+{
+public:
+   int age;
+   string experience;
+//Quaestor 
+   bool isElligible4Q(age, experience){ 
+        if (age=>36 && 2yearsQ)
+           return true;
+
+ else return false;
+}
+//Aedile 
+   bool isElligible4A(age, experience){ 
+    if (age=>36 && 2yearsQ) // Minimum age 36, with at least 2 years of service
+ as Quaestor required
+        return true;
+  else 
+     return false;
+} 
+//Praetor
+   bool isElligible4P(age, experience){
+       if (age=>39 && 2yearsA) // Minimum age 39, with at least 2 years of service
+ as Aedile required
+        return true;
+  else 
+     return false;
+
+}
+
+//Aedile
+   bool isElligible4C(age, experience){
+         if (tenYearGap && (age=>42 && 2yearsP)) // Minimum age 42, with at least 2 years of service
+ as Praetor required and 10 year interval required for re election attempts
+        return true;
+  else 
+     return false;
+}
+
+};
+
+FIELD: timeofdeath of the politicians 
+first counslor date initilize as small number 
+---------------------------------------------
+         for psi!!!!
+vector Quaestor int<> size= 20 
+vector Aediles int<> size= 10
+vector Praetors int<> size= 8
+vector Consuls int<> size= 2
+
+
+-----------------------------------------------
+
+
+int PSI(){
+//PSI Calculation
+int PSI = 100;
+ if(unfilledPositionFound)
+{
+   PSI -=5;
+}
+ if(reelectingConsulFound) 
+{
+   PSI -=10;
+}
+
+ return PSI; 
+}
+
+void winner(elligible politicians)
+{ 
+   generate random politician 
+}
+
+
+-----generate random winner if : --------------
+    1-group of quaestor elected stay elligible until they die
+    2-politician candidates for higher rank
+
++ FIRST higher offices 
++ THEN lower offices
+    
+
+
+-------Simulation Dynamics:----------
++ INITIAL : political landscape + psi
++ Simulate:
+      -
++ UPDATES: 
+      - AGE+=1 //every year 
+      - if (died || supassedLifeExpectancy))
+             POLITICIAN --;
+      - PSI() //update psi and check for penalties
+       
++
+
+
+
+-------------MAIN OUTPUT:-------------- 
+1- return PSI 
+2- retun annualFillRate 
+3- Historgram of age distribution  
+
