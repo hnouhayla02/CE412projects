@@ -33,11 +33,22 @@ class Politician
 
 
 
-};
+};    
 
 
-bool unfilledPositionFound();
-bool reelectingConsulFound();
+bool unfilledPositionFound(unordered_map<string, int>& )
+{
+     
+}
+
+bool reelectingConsulFound()
+{
+
+
+}
+
+
+
 //calculate PSI
 int returnPSI(int something){
 //PSI Calculation
@@ -81,10 +92,10 @@ int simulateLifeExpec();
 
 void simulateAnnualElections();
 
-void updateAgesAndRemovePoliticians(queue<Politician& candidates);
+void updateAgesAndRemovePoliticians(queue<Politician>& candidates);
 
 void generateNewCandidates();
 
-void printResluts(queue<Politician>& candidates, undordred_map<string, int>& officePositions, int finalePSI);
+void printResluts(queue<Politician>& candidates, unordered_map<string, int>& officePositions, int finalePSI);
 
 
