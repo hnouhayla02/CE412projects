@@ -109,11 +109,11 @@ int calculatePSI(queue<Politician>& candidates, unordered_map<string, int>& offi
 
 string updateLevel(Politician& p) {
     if (p.level == "Quaestor" && p.age >= 36) {
-        return "Aedile"; // Promote Quaestor to Aedile if age requirement is met
+        return "Aedile"; // Promote Quaestor to Aedile if(age requirement is met)
     } else if (p.level == "Aedile" && p.age >= 39) {
-        return "Praetor"; // Promote Aedile to Praetor if age requirement is met
+        return "Praetor"; // Promote Aedile to Praetor if(age requirement is met)
     } else if (p.level == "Praetor" && p.age >= 42) {
-        return "Consul"; // Promote Praetor to Consul if age requirement is met
+        return "Consul"; // Promote Praetor to Consul if(age requirement is met)
     } else {
         return p.level; // No level change
     }
@@ -144,7 +144,7 @@ void updateAgesAndRemovePoliticians(queue<Politician>& candidates) {
 }
 
 void generateNewCandidates(queue<Politician>& candidates) {
-    int influx = 15 + rand() % 6; // Annual Influx of New Candidates
+    int influx = 15 + rand() % 6; // Annual Influx of New 
     for (int i = 0; i < influx; ++i) {
         Politician p;
         p.age = 30; // Minimum age for Quaestor
@@ -162,9 +162,7 @@ void printResults(queue<Politician>& candidates, unordered_map<string, int>& off
     cout << "Praetor: " << (8 - officePositions["Praetor"]) / 200.0 * 100 << "%" << endl;
     cout << "Consul: " << (2 - officePositions["Consul"]) / 200.0 * 100 << "%" << endl;
 
-    // Age distribution of politicians in different offices
-    // You would need to collect age information from the 'candidates' queue
-    // and then calculate the distribution for each office level.
+   
 }
 
 
